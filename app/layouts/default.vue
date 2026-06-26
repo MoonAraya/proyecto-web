@@ -1,3 +1,17 @@
+<script setup lang="ts">
+const route = useRoute();
+const isActive = (to: String) => route.path === to;
+
+const navegacion = [
+    { label: 'Inicio', to: '/' },
+    { label: 'Inscripciones', to: '/inscripciones' },
+    { label: 'Consultar Inscripcion', to: '/consultarinscripcion' },
+    { label: 'Staff', to: '/login' },
+]
+
+</script>
+
+
 <template>
     <!-- NAV BAR -->
     <div class="w-full z-50 bg-[#F5EFEF] px-6 py-4 shadow-xl">
@@ -10,11 +24,11 @@
             <div class="flex flex-col gap-5 sm:flex-row items-center">
                 <!-- botones para ir a lugares -->
                 <nav class="flex items-center gap-5">
-                    <a href="#"
-                        class="text-[#4F3D35] text-md font-semibold hover:bg-[#F6D579] py-1 px-2 rounded-xl">Eventos</a>
-                    <a href="#" class="text-[#4F3D35]/70 text-md hover:bg-[#F6D579] py-1 px-2 rounded-xl">Staff</a>
-                    <a href="#"
-                        class="text-[#4F3D35]/70 text-md hover:bg-[#F6D579] py-1 px-2 rounded-xl">Inscripciones</a>
+                    <NuxtLink v-for="link in navegacion" :key="link.to" :to="link.to"
+                        :class="isActive(link.to) ? 'bg-[#F6D579] text-[#4F3D35] font-bold' : 'text-[#4F3D35]/70 hover:bg-[#F6D579] font-semibold'"
+                        class="text-md py-1 px-2 rounded-xl">
+                        {{ link.label }}
+                    </NuxtLink>
                 </nav>
                 <!-- Donde sale el nombre de usuario y boton cerrar sesión -->
                 <div class="gap-5 flex items-center">
