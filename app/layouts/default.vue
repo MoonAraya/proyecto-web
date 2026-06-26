@@ -16,8 +16,8 @@ const navegacion = [
     <!-- NAV BAR -->
     <div class="w-full z-50 bg-[#F5EFEF] px-6 py-4 shadow-xl">
         <!-- para que solo use el contenido dentro de esto -->
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between">
-            <!-- parte con logo o lo que sea asi -->
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-2 sm:justify-between">
+            <!-- parte con texto y para poner logo en caso de que haga falta -->
             <div>
                 <h3 class="text-[#4F3D35] font-bold text-lg">Smart Events</h3>
             </div>
