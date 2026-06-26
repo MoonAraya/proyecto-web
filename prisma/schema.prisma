@@ -27,7 +27,7 @@ model Evento{
   lugar String @db.VarChar(50)
   imagen String @db.VarChar(255)
   valor Int 
-  inscritos Inscrito
+  inscritos Inscrito[]
 }
 
 model Inscrito{
