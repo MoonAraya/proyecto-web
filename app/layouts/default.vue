@@ -7,6 +7,9 @@ const navegacion = [
     { label: 'Inscripciones', to: '/inscripciones' },
     { label: 'Consultar Inscripcion', to: '/consultarinscripcion' },
     { label: 'Staff', to: '/login' },
+    { label: 'Agregar Evento', to: '/agregarevento' },
+    { label: 'Cuentas', to: '/cuentas' },
+    { label: 'Consultar evento', to: '/consultarevento' },
 ]
 
 </script>
@@ -26,7 +29,7 @@ const navegacion = [
                 <nav class="flex items-center gap-5">
                     <NuxtLink v-for="link in navegacion" :key="link.to" :to="link.to"
                         :class="isActive(link.to) ? 'bg-[#F6D579] text-[#4F3D35] font-bold' : 'text-[#4F3D35]/70 hover:bg-[#F6D579] font-semibold'"
-                        class="text-md py-1 px-2 rounded-xl">
+                        class="text-sm py-1 px-2 rounded-xl">
                         {{ link.label }}
                     </NuxtLink>
                 </nav>
