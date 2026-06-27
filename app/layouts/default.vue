@@ -5,7 +5,7 @@ const isActive = (to: String) => route.path === to;
 const navegacion = [
     { label: 'Inicio', to: '/' },
     { label: 'Inscripciones', to: '/inscripciones' },
-    { label: 'Consultar Inscripcion', to: '/consultarinscripcion' },
+    { label: 'Consultar Inscripción', to: '/consultarinscripcion' },
     { label: 'Staff', to: '/login' },
     { label: 'Agregar Evento', to: '/agregarevento' },
     { label: 'Cuentas', to: '/cuentas' },
