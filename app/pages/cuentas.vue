@@ -138,7 +138,7 @@ function cerrarConfirmacionBorrar() {
         </div>
     </div>
 
-    //Formulario para agregar usuario
+    <!-- Formulario para agregar usuario -->
     <Popups v-model:open="mostrarFormularioAgregar" title="Agregar administrador">
         <UForm class="space-y-4" :state="formularioNuevoUsuario" :schema="validarCrearAdmin"
             @submit.prevent="guardarUsuario">
@@ -182,7 +182,7 @@ function cerrarConfirmacionBorrar() {
         </UForm>
     </Popups>
 
-    //Confirmar borrar cuenta
+    <!-- Confirmar borrar cuenta -->
     <Popups v-model:open="mostrarConfirmacionBorrar" title="Borrar administrador"
         :description="usuarioBorrar ? `¿Estas seguro que deseas borrar a ${usuarioBorrar.nombre} ${usuarioBorrar.apellido}? Esta decisión es permanente` : ''">
         <!-- div con los 2 botones para cancelar o confirmar -->
