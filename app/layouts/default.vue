@@ -26,7 +26,7 @@ const navegacion = [
             </div>
             <div class="flex flex-col gap-5 sm:flex-row items-center">
                 <!-- botones para ir a lugares -->
-                <nav class="flex items-center gap-5">
+                <nav class="flex flex-wrap items-center gap-5">
                     <NuxtLink v-for="link in navegacion" :key="link.to" :to="link.to"
                         :class="isActive(link.to) ? 'bg-boton text-texto font-bold' : 'text-texto/70 hover:bg-boton font-semibold'"
                         class="text-sm py-1 px-2 rounded-xl">
@@ -48,7 +48,7 @@ const navegacion = [
             </div>
         </div>
     </div>
-    <main>
+    <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
         <slot />
     </main>
 </template>
