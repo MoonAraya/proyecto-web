@@ -5,11 +5,17 @@
     /* Fondos */
     --color-fondo-general: #F5EFEF;
     --color-fondo-login: #CBB8A0;
+    --color-fondo-card: #f3ebd6;
+    --color-fondo-formulario: #c0a427;
 
     /* Texto */
     --color-texto: #4F3D35;
+    --color-texto-formulario: #33241eb2;
 
     /* Botones */
     --color-boton: #F6D579;
     --color-boton-hover: #ECB914;
+    --color-boton-eliminar: #db1515;
+    --color-boton-eliminar-hover: #ff0000;
+    
 }

@@ -1,23 +1,38 @@
 <script setup lang="ts">
+
+//Para ver en que pagina se esta y las disponibles
 const route = useRoute();
 const isActive = (to: String) => route.path === to;
+const { user, clear } = useUserSession();
+
 
 const navegacion = [
     { label: 'Inicio', to: '/' },
     { label: 'Inscripciones', to: '/inscripciones' },
     { label: 'Consultar Inscripción', to: '/consultarinscripcion' },
     { label: 'Staff', to: '/login' },
-    { label: 'Agregar Evento', to: '/agregarevento' },
+    ...(user.value?.rol === 'Administrador' ? [{ label: 'Agregar Evento', to: '/agregarevento' },
     { label: 'Cuentas', to: '/cuentas' },
-    { label: 'Consultar evento', to: '/consultarevento' },
+    { label: 'Consultar evento', to: '/consultarevento' }] : []),
 ]
+
+// Para logout
+async function logout() {
+    await $fetch('/api/auth/logout', {
+        method: 'POST'
+    });
+    await clear();
+    await navigateTo('/login');
+}
+
+
 
 </script>
 
 
 <template>
     <!-- NAV BAR -->
-    <div class="w-full z-50 bg-fondo-general px-6 py-4 shadow-xl">
+    <div class="w-full z-50 bg-fondo-general px-6 py-6 shadow-xl">
         <!-- para que solo use el contenido dentro de esto -->
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-2 sm:justify-between">
             <!-- parte con texto y para poner logo en caso de que haga falta -->
@@ -26,7 +41,7 @@ const navegacion = [
             </div>
             <div class="flex flex-col gap-5 sm:flex-row items-center">
                 <!-- botones para ir a lugares -->
-                <nav class="flex items-center gap-5">
+                <nav class="flex items-center justify-center gap-5 flex-wrap">
                     <NuxtLink v-for="link in navegacion" :key="link.to" :to="link.to"
                         :class="isActive(link.to) ? 'bg-boton text-texto font-bold' : 'text-texto/70 hover:bg-boton font-semibold'"
                         class="text-sm py-1 px-2 rounded-xl">
@@ -35,15 +50,17 @@ const navegacion = [
                 </nav>
                 <!-- Donde sale el nombre de usuario y boton cerrar sesión -->
                 <div class="gap-5 flex items-center">
-                    <!-- Nombre y si es admin o usuario -->
-                    <div class="flex flex-col rounded-md border-2 border-boton px-4 py-2">
-                        <span class="text-texto text-md">Benjamin Marchant</span>
-                        <span class="text-texto/70 text-sm">Administrador</span>
+                    <!-- Nombre y rol -->
+                    <div v-if="user?.rol === 'Administrador'"
+                        class="flex flex-col rounded-md border-2 border-boton px-4 py-2">
+                        <span class="text-texto text-md">{{ user?.nombre }} {{ user?.apellido }}</span>
+                        <span class="text-texto/70 text-sm">{{ user?.rol }}</span>
                     </div>
 
-                    <button
-                        class="bg-boton text-texto py-2 px-4 rounded-xl hover:bg-boton-hover text-md font-bold transition-colors">Cerrar
-                        Sesion</button>
+                    <UButton @click="logout" v-if="user?.rol === 'Administrador'"
+                        class="bg-boton text-texto py-2 px-4 rounded-xl hover:bg-boton-hover text-md font-bold transition-colors">
+                        Cerrar Sesion
+                    </UButton>
                 </div>
             </div>
         </div>
