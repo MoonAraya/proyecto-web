@@ -30,7 +30,7 @@ async function login() {
         })
         await fetchSession();
         //redireccionar a la pagina de cuentas
-        navigateTo('/cuentas');
+        navigateTo('/gestor-cuentas');
     } catch (err: any) {
         errorFormulario.value = getApiErrorMessage(err, "No se pudo iniciar sesión");
     }

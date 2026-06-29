@@ -10,10 +10,9 @@ const navegacion = [
     { label: 'Inicio', to: '/' },
     { label: 'Inscripciones', to: '/inscripciones' },
     { label: 'Consultar Inscripción', to: '/consultarinscripcion' },
-    { label: 'Gestor de Staff', to: '/login' },
-    ...(user.value?.rol === 'Administrador' ? [{ label: 'Agregar Evento', to: '/agregarevento' },
-    { label: 'Cuentas', to: '/cuentas' },
-    { label: 'Gestor de Eventos', to: '/consultarevento' }] : []),
+    ...(user.value?.rol === 'Administrador' ? [
+        { label: 'Cuentas', to: '/gestor-cuentas' },
+        { label: 'Gestor de Eventos', to: '/gestor-eventos' }] : [{ label: 'Gestor de Staff', to: '/login' }]),
 ]
 
 // Para logout
@@ -68,7 +67,7 @@ async function logout() {
     <main>
         <slot />
     </main>
-    <footer class="bg-fondo-general py-6">
+    <footer class="bg-fondo-general py-6 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p class="text-center text-sm text-texto/70">&copy; 2026 Smart Events. Todos los derechos reservados.
             </p>
