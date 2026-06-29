@@ -64,8 +64,7 @@ async function guardarUsuario() {
         await refresh();
     }
     catch (err: any) {
-        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo guardar el nuevo usuario");
-
+        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo agregar el nuevo usuario");
     }
     finally {
         guardandoNuevoUsuario.value = false;
