@@ -69,7 +69,7 @@ async function logout() {
             <slot />
         </div>
     </main>
-    <footer class="bg-fondo-general py-6 mt-auto">
+    <footer class="bg-fondo-general py-6 mt-auto bottom-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p class="text-center text-sm text-texto/70">&copy; 2026 Smart Events. Todos los derechos reservados.
             </p>
