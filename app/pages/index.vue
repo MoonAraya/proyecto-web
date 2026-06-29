@@ -1,11 +1,14 @@
-<scrip setup lang="es">
-  //  import type { Evento } from '~/types/Evento';
+<script setup lang="ts">
 
-  //  const { data: eventosProximos, pending, error } = await useFetch < Evento[] > ('/api/eventos/proximos')
-</scrip>
+import type { Evento } from '~/types/evento';
+
+const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/eventos/futuros');
+
+</script>
+
 <template>
     <div class="mx-auto max-w-7xl space-y-8">
-        <!-- actua como hero -->
+        <!-- // actua como hero -->
         <section class="mx-auto max-w-2xl sm:text-center">
             <div class="space-y-5">
                 <h1 class="text-4xl font-bold tracking-tight text-texto sm:text-6xl">Bienvenido a Smart Events</h1>
@@ -23,69 +26,71 @@
             </div>
         </section>
 
-        <!-- proximos eventos -->
-        <div class="mx-auto max-w-2xl sm:text-center">
+        <!-- //proximos eventos -->
+        <!-- <div class="mx-auto max-w-2xl sm:text-center">
             <div class="space-y-5">
                 <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
             </div>
         </div>
         <section class="mx-auto justify-around grid gap-6 md:grid-cols-3"">
-            <!-- loop de cards con divs no article -->
+           //loop de cards con divs no article  PLACEHOLDERS
             <article class=" rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-            <h3 class="text-lg font-semibold text-course-text">PLACEHOLDER</h3>
-            <p class="mt-2 text-sm leading-6 text-course-text-muted">
-                Vista inicial con una síntesis breve del sistema y accesos a las demás páginas.
+            <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+            <p class="mt-2 text-sm leading-6 text-texto/70">
+                TEXTO PLACEHOLDER
             </p>
             </article>
 
             <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-course-text">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-course-text-muted">
-                    Página con la tabla de cursos cargada desde la API y acciones para refrescar los datos.
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
                 </p>
             </article>
 
             <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-course-text">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-course-text-muted">
-                    Sección estática preparada para añadir más adelante directorio, fichas o filtros de
-                    estudiantes.
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
                 </p>
             </article>
             <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-course-text">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-course-text-muted">
-                    Vista inicial con una síntesis breve del sistema y accesos a las demás páginas.
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
                 </p>
             </article>
 
             <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-course-text">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-course-text-muted">
-                    Página con la tabla de cursos cargada desde la API y acciones para refrescar los datos.
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
                 </p>
             </article>
 
             <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-course-text">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-course-text-muted">
-                    Sección estática preparada para añadir más adelante directorio, fichas o filtros de
-                    estudiantes.
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
                 </p>
             </article>
-        </section>
-        <!-- Próximos eventos -->
-        <!-- <section class="py-16 px-6">
+        </section> -->
+
+        <!-- //Próximos eventos -->
+
+        <section class="py-16 px-6">
             <div class="max-w-7xl mx-auto">
+                <!-- // div titulo proximos eventos -->
                 <div class="flex items-end justify-between mb-8">
-                    <div>
-                        <h2 class="text-3xl font-bold text-brand-text">Próximos eventos</h2>
+                    <div clase="space-y-5">
+                        <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
                     </div>
                 </div>
+                <!-- // loop eventos -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <EventoCard v-for="evento in eventosProximos" :evento="evento" /> //en el script de esta pagina
+                    <futurosCards v-for="evento in futurosEventos" :evento="evento" />
                 </div>
             </div>
-        </section> -->
+        </section>
     </div>
 </template>
