@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to) => {
     const rutasPublicas = ["/login", "/", "/inscripciones", "/consultarinscripcion"];
 
     //si no esta logueado y se mete a una pagina que no deberia dejar lo mand a login
-    if (!loggedIn.value && rutasPublicas.includes(to.path)) {
+    if (!loggedIn.value && !rutasPublicas.includes(to.path)) {
         return navigateTo("/login");
     }
 });
