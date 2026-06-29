@@ -1,8 +1,8 @@
-<scrip setup lang="es">
-  //  import type { Evento } from '~/types/Evento';
+<script setup lang="ts">
+//  import type { Evento } from '~/types/Evento';
 
-  //  const { data: eventosProximos, pending, error } = await useFetch < Evento[] > ('/api/eventos/proximos')
-</scrip>
+//  const { data: eventosProximos, pending, error } = await useFetch < Evento[] > ('/api/eventos/proximos')
+</script>
 <template>
     <div class="mx-auto max-w-7xl space-y-8">
         <!-- actua como hero -->
