@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Evento } from '~/types/evento';
+import { formatFechaCorta, formatHora } from '~/utils/formatters';
 
 const props = defineProps<{
     evento: Evento

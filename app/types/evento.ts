@@ -7,5 +7,7 @@ export interface Evento{
     lugar: string
     imagen: string
     valor: number
-    inscritos: Inscrito
+    _count: {
+        inscritos: number
+    }
 }
