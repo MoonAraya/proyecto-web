@@ -88,7 +88,7 @@ const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/
                 </div>
                 <!-- // loop eventos -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <futurosCards v-for="evento in futurosEventos" :evento="evento" />
+                    <EventoCards v-for="evento in futurosEventos" :evento="evento" />
                 </div>
             </div>
         </section>

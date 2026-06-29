@@ -51,12 +51,13 @@ const horaFormateada = computed(() => formatHora(props.evento.fecha))
                 </div>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-fondo-login">
+            <!-- boton para inscribirse en cada card -->
+            <!-- <div class="mt-4 pt-3 border-t border-fondo-login">
                 <button
                     class="w-full bg-boton hover:bg-boton-hover text-texto font-semibold text-sm py-2 px-4 rounded-xl transition-colors cursor-pointer">
                     Inscribirse
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
