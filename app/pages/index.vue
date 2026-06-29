@@ -1,61 +1,96 @@
 <script setup lang="ts">
+
 import type { Evento } from '~/types/evento';
 
-const props = defineProps<{
-    evento: Evento
-}>()
-
-const fechaFormateada = computed(() => formatFechaCorta(props.evento.fecha))
-const horaFormateada = computed(() => formatHora(props.evento.fecha))
+const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/eventos/futuros');
 
 </script>
+
 <template>
-    <div
-        class="bg-fondo-card border border-fondo-login rounded-2xl overflow-hidden hover:border-fondo-formulario transition-colors group">
-
-        <!-- Imagen -->
-        <div class="w-full h-48 overflow-hidden">
-            <img :src="evento.imagen" :alt="evento.titulo"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-        </div>
-
-        <!-- Contenido card -->
-        <div class="p-5">
-            <h3 class="text-texto font-bold text-lg mb-4 group-hover:text-fondo-formulario transition-colors">
-                {{ evento.titulo }}
-            </h3>
-
-            <div class="flex flex-col gap-2 text-sm">
-                <div class="flex items-center justify-between">
-                    <span class="font-medium text-texto-formulario">Fecha</span>
-                    <span class="text-texto">{{ fechaFormateada }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-medium text-texto-formulario">Hora</span>
-                    <span class="text-texto">{{ horaFormateada }}</span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-medium text-texto-formulario">Lugar</span>
-                    <span class="text-texto">{{ evento.lugar }}</span>
-                </div>
-                <div class="flex items-center justify-between border-t border-fondo-login pt-2 mt-1">
-                    <span class="font-medium text-texto-formulario text-sm">Valor</span>
-                    <span class="text-fondo-formulario font-semibold">
-                        {{ evento.valor }}
-                    </span>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="font-medium text-texto-formulario text-sm">Inscritos</span>
-                    <span class="text-texto font-semibold">{{ evento._count.inscritos }} personas</span>
-                </div>
+    <div class="mx-auto max-w-7xl space-y-8">
+        <!-- // actua como hero -->
+        <section class="mx-auto max-w-2xl sm:text-center">
+            <div class="space-y-5">
+                <h1 class="text-4xl font-bold tracking-tight text-texto sm:text-6xl">Bienvenido a Smart Events</h1>
+                <p class="text-lg leading-8 text-texto/70">lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
-
-            <div class="mt-4 pt-3 border-t border-fondo-login">
-                <button
-                    class="w-full bg-boton hover:bg-boton-hover text-texto font-semibold text-sm py-2 px-4 rounded-xl transition-colors cursor-pointer">
+            <div class="flex justify-center items-center gap-x-6">
+                <NuxtLink to="/inscripciones"
+                    class="rounded-md bg-boton px-3.5 py-2.5 text-sm font-semibold text-texto shadow-sm hover:bg-boton-hover focus-visible:outline-offset-2 focus-visible:outline-boton">
                     Inscribirse
-                </button>
+                </NuxtLink>
+                <NuxtLink to="/#" class="text-sm font-semibold leading-6 text-texto/70 hover:text-texto">Ver lista de
+                    eventos
+                </NuxtLink>
+            </div>
+        </section>
+
+        <!-- //proximos eventos -->
+        <!-- <div class="mx-auto max-w-2xl sm:text-center">
+            <div class="space-y-5">
+                <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
             </div>
         </div>
+        <section class="mx-auto justify-around grid gap-6 md:grid-cols-3"">
+           //loop de cards con divs no article  PLACEHOLDERS
+            <article class=" rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
+            <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+            <p class="mt-2 text-sm leading-6 text-texto/70">
+                TEXTO PLACEHOLDER
+            </p>
+            </article>
+
+            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
+                </p>
+            </article>
+
+            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
+                </p>
+            </article>
+            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
+                </p>
+            </article>
+
+            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
+                </p>
+            </article>
+
+            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
+                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
+                <p class="mt-2 text-sm leading-6 text-texto/70">
+                    TEXTO PLACEHOLDER
+                </p>
+            </article>
+        </section> -->
+
+        <!-- //Próximos eventos -->
+
+        <section class="py-16 px-6">
+            <div class="max-w-7xl mx-auto">
+                <!-- // div titulo proximos eventos -->
+                <div class="flex items-end justify-between mb-8">
+                    <div clase="space-y-5">
+                        <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
+                    </div>
+                </div>
+                <!-- // loop eventos -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    <futurosCards v-for="evento in futurosEventos" :evento="evento" />
+                </div>
+            </div>
+        </section>
     </div>
 </template>
