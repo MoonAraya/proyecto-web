@@ -7,7 +7,7 @@ definePageMeta({
 </script>
 <!-- IDEA: BOTON MODAL PARA CADA EVENTO QUE ABRA UN COMBO BOX CON LA LISTA DE INSCRITOS PARA ELIMINARLO -->
 <template>
-    <div class="mx-auto max-w-7xl space-y-8">
+    <div class="space-y-8">
         <!-- titulo + boton para agregar EVENTOS nuevos -->
         <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <!-- TEXTOS A LA IZQUIERDA -->
