@@ -11,9 +11,9 @@ const navegacion = [
     { label: 'Inscripciones', to: '/inscripciones' },
     { label: 'Consultar Inscripción', to: '/consultarinscripcion' },
     { label: 'Gestor de Staff', to: '/login' },
-    ...(user.value?.rol === 'Administrador' ? [{ label: 'Agregar Evento', to: '/agregarevento' },
-    { label: 'Cuentas', to: '/gestor-cuentas' },
-    { label: 'Gestor de Eventos', to: '/gestor-eventos' }] : []),
+    ...(user.value?.rol === 'Administrador' ? [
+        { label: 'Cuentas', to: '/gestor-cuentas' },
+        { label: 'Gestor de Eventos', to: '/gestor-eventos' }] : []),
 ]
 
 // Para logout
