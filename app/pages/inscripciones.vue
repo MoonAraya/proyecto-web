@@ -112,14 +112,14 @@ async function guardarInscripcion() {
             </div>
         </aside>
 
-        <main>
+        <main class="flex-1">
             <div class="mb-6">
                 <h1 class="text-3xl font-bold text-texto mb-4">Eventos</h1>
                 <p class="text-texto/70 mt-1">Eventos a los que puedes inscribirte.</p>
             </div>
             <!-- // loop eventos -->
             <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     <EventoCards v-for="evento in eventos" :evento="evento" />
                 </div>
             </div>

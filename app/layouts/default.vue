@@ -31,7 +31,7 @@ async function logout() {
 
 <template>
     <!-- NAV BAR -->
-    <div class="w-full z-50 bg-fondo-general px-6 py-6 shadow-xl">
+    <div class="w-full z-50 bg-fondo-general sticky top-0 px-6 py-6 shadow-xl">
         <!-- para que solo use el contenido dentro de esto -->
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-2 sm:justify-between">
             <!-- parte con texto y para poner logo en caso de que haga falta -->
