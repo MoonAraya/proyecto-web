@@ -98,7 +98,7 @@ async function guardarInscripcion() {
                             :ui="{ base: colorFondoCamposFormulario }" />
                     </UFormField>
 
-                    <!-- selector de evento -->
+                    <!-- selector de evento  -->
                     <UFormField label="Evento" name="eventoId" :ui="{ label: colorTextoFormulario }">
                         <USelectMenu v-model="formularioEvento.eventoId" :items="eventosOptions" value-key="id"
                             label-key="label" class="w-full" placeholder="Seleccione un evento" :loading="pending"
