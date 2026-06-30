@@ -58,7 +58,7 @@ const horaFormateada = computed(() => formatHora(props.evento.fecha))
             <!-- boton para borrar la card -->
             <div class="mt-4 pt-3 border-t border-fondo-login">
                 <UButton @click="emit('borrar-evento', props.evento)"
-                    class="w-full bg-boton hover:bg-boton-hover text-texto font-semibold text-sm py-2 px-4 rounded-xl transition-colors cursor-pointer">
+                    class="w-full bg-boton hover:bg-boton-hover text-texto font-semibold text-sm py-2 px-4 rounded-xl transition-colors cursor-pointer flex justify-center">
                     Eliminar evento
                 </UButton>
             </div>

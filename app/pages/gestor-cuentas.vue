@@ -9,10 +9,10 @@ definePageMeta({
 })
 
 const validarCrearAdmin = z.object({
-    email: z.email({ message: 'Debe ingresar un email válido.' }),
+    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener a lo mas 100 caracteres'),
     password: z.string().min(8, 'La contraseña debe tener como minimo 8 caracteres'),
-    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(20, 'El nombre debe tener a lo mas 20 caracteres'),
-    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(20, 'El apellido debe tener a lo mas 20 caracteres')
+    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(50, 'El nombre debe tener a lo mas 50 caracteres'),
+    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(50, 'El apellido debe tener a lo mas 50 caracteres')
 })
 
 // para tomar la informacion de los usuarios en la tabla usuario
