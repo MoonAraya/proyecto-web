@@ -4,12 +4,20 @@ definePageMeta({
     middleware: ['admin']
 })
 
+import type { Evento } from '../types/evento'
+import { z } from 'zod';
+
+const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
+
+
+
+
 </script>
 <!-- IDEA: BOTON MODAL PARA CADA EVENTO QUE ABRA UN COMBO BOX CON LA LISTA DE INSCRITOS PARA ELIMINARLO -->
 <template>
     <div class="space-y-8">
         <!-- titulo + boton para agregar EVENTOS nuevos -->
-        <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <section class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <!-- TEXTOS A LA IZQUIERDA -->
             <div>
                 <h1 class="text-3xl font-extrabold tracking-tight text-texto sm:text-4xl">
@@ -25,6 +33,7 @@ definePageMeta({
                 Agregar Evento
             </button>
         </section>
+
         <!-- LA IDEA ES QUE CADA EVENTO TENGA SUS PROPIOS BOTONES DE MANTENEDOR? -->
         <!-- proximos eventos -->
         <div class="mx-auto max-w-2xl sm:text-center">
@@ -32,48 +41,10 @@ definePageMeta({
                 <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
             </div>
         </div>
-        <section class="mx-auto justify-around grid gap-6 md:grid-cols-3"">
-            <!-- loop de cards con divs no article  PLACEHOLDERS-->
-            <article class=" rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-            <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-            <p class="mt-2 text-sm leading-6 text-texto/70">
-                TEXTO PLACEHOLDER
-            </p>
-            </article>
 
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
+        <section class="mx-auto justify-around grid gap-6 md:grid-cols-3">
+            <!-- loop de cards con divs no article -->
+            <EventoCards v-for="evento in eventos" :evento="evento" />
         </section>
         <!-- Próximos eventos -->
         <!-- <section class="py-16 px-6">
@@ -89,4 +60,9 @@ definePageMeta({
             </div>
         </section> -->
     </div>
+
+
+
+
+
 </template>

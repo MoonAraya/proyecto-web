@@ -21,7 +21,7 @@ const horaFormateada = computed(() => formatHora(props.evento.fecha))
         </div>
 
         <!-- Contenido card -->
-        <div class="p-5">
+        <div class="p-12">
             <h3 class="text-texto font-bold text-lg mb-4 group-hover:text-fondo-formulario transition-colors">
                 {{ evento.titulo }}
             </h3>
