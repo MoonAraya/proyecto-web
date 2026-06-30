@@ -20,9 +20,6 @@ const formularioNuevoEvento = reactive({
     fecha: '',
     hora: '',
     lugar: '',
-    // Para imagen
-    nombreArchivo: '',
-    archivoBase64: '',
     valor: undefined
 })
 
@@ -31,8 +28,7 @@ function reiniciarFormularioAgregar() {
     formularioNuevoEvento.fecha = '';
     formularioNuevoEvento.hora = '';
     formularioNuevoEvento.lugar = '';
-    formularioNuevoEvento.nombreArchivo = '';
-    formularioNuevoEvento.archivoBase64 = '';
+    archivoImagen.value = null;
     formularioNuevoEvento.valor = undefined;
     errorFormularioAgregar.value = '';
 }
@@ -42,19 +38,8 @@ function cerrarFormularioAgregar() {
     reiniciarFormularioAgregar();
 }
 
-// Para leer el archivo del pc y transformar a texto
-function alSeleccionarArchivo(event: any) {
-    const archivo = event.target.files[0]
-    if (archivo) {
-        formularioNuevoEvento.nombreArchivo = archivo.name
-
-        const reader = new FileReader()
-        reader.onload = (event: any) => {
-            formularioNuevoEvento.archivoBase64 = event.target.result // Aquí queda guardado como texto largo
-        }
-        reader.readAsDataURL(archivo)
-    }
-}
+// Para la imagen
+const archivoImagen = ref<File | null>(null)
 
 // Para agregar
 
@@ -62,6 +47,19 @@ async function guardarEvento() {
     guardandoNuevoEvento.value = true;
     errorFormularioAgregar.value = '';
     try {
+        let nombreArchivo = '';
+        let archivoBase64 = '';
+        if (archivoImagen.value) {
+            nombreArchivo = archivoImagen.value.name
+            archivoBase64 = await new Promise<string>((resolve) => {
+                const reader = new FileReader()
+                reader.onload = (event: any) => resolve(event.target.result)
+                reader.readAsDataURL(archivoImagen.value!)
+            })
+        }
+
+
+
         await $fetch('/api/eventos', {
             method: 'POST',
             body: {
@@ -69,8 +67,8 @@ async function guardarEvento() {
                 fecha: formularioNuevoEvento.fecha,
                 hora: formularioNuevoEvento.hora,
                 lugar: formularioNuevoEvento.lugar,
-                nombreArchivo: formularioNuevoEvento.nombreArchivo,
-                archivoBase64: formularioNuevoEvento.archivoBase64,
+                nombreArchivo: nombreArchivo,
+                archivoBase64: archivoBase64,
                 valor: formularioNuevoEvento.valor
             }
         });
@@ -166,16 +164,12 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
             </UFormField>
 
             <!-- imagen como tal -->
-            <UFormField label="Seleccionar Archivo" name="archivoBase64" :ui="{ label: colorTextoFormulario }">
-                <div class="flex flex-col gap-1">
-                    <UInput type="file" accept="image/*" class="w-full" @change="alSeleccionarArchivo"
-                        :ui="{ base: colorFondoCamposFormulario }" />
-                    <p v-if="formularioNuevoEvento.nombreArchivo" class="text-sm text-texto-formulario font-semibold">
-                        Imagen seleccionada: {{ formularioNuevoEvento.nombreArchivo }}</p>
-                </div>
+            <UFormField label="Imagen" name="imagen" :ui="{ label: colorTextoFormulario }">
+                <UFileUpload v-model="archivoImagen" accept="image/*" label="Agregue su imagen" class="w-full" :ui="{
+                    base: 'bg-fondo-general/90 hover:bg-fondo-general/70 transition-colors',
+                    label: 'text-texto'
+                }" />
             </UFormField>
-
-
 
             <!-- valor -->
             <UFormField label="Valor" name="valor" :ui="{ label: colorTextoFormulario }">

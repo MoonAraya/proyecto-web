@@ -8,6 +8,11 @@ export default defineEventHandler(async () => {
             }
         },
         orderBy: [{ fecha: 'asc' }, { titulo: 'asc' }],
+        include: {
+            _count: {
+            select: { inscritos:true }
+            }
+        },
         take: 6,
     })
 })
