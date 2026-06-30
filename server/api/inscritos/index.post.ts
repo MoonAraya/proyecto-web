@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-    // extraer los datos del formulario de creacion de cuenta
+    // extraer los datos del formulario de ingreso de inscripcion
     const { email, nombre, apellido, eventoId } = await readBody(event)
 
     const emailNormalizado = typeof email === 'string' ? email.trim() : '';
