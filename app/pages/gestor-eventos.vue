@@ -6,14 +6,30 @@ definePageMeta({
 
 import type { Evento } from '../types/evento'
 import { z } from 'zod';
-/*
+
 const validarCrearEvento = z.object({
-    titulo: z.string().min(8, 'El evento debe tener al menos 8 caracteres').max(50, 'El evento debe tener a lo mas 50 caracteres')
-    fecha: z.date()
-    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(20, 'El nombre debe tener a lo mas 20 caracteres'),
-    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(20, 'El apellido debe tener a lo mas 20 caracteres')
-})
-*/
+    titulo: z.string().min(8, 'El evento debe tener al menos 8 caracteres').max(50, 'El evento debe tener a lo mas 50 caracteres'),
+    fecha: z.string().min(1, 'Debe ingresar fecha'),
+    hora: z.string().min(1, 'Debe ingresar hora'),
+    lugar: z.string().min(6, 'El lugar debe tener al menos 6 caracteres'),
+    valor: z.coerce.number('El valor debe ser un número')
+}).refine((info) => {
+    //la condicion es por si no se ingresan valores como tal, que vaya para adelante y se valide con el fecha u otra minima
+    if (!info.fecha || !info.hora) {
+        return true;
+    }
+    //esto para comparar la fecha ingresada con la actual en el momento que se presiona el boton agregar
+    const fechaHora = new Date(`${info.fecha}T${info.hora}:00`);
+    const momentoactual = new Date();
+
+    return fechaHora > momentoactual
+}, {
+    message: 'La fecha y hora deben ser en un momento futuro',
+    path: ['hora']
+}
+)
+
+
 
 const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
 
@@ -82,9 +98,16 @@ async function guardarEvento() {
         });
         cerrarFormularioAgregar();
         await refresh();
+
+        useToast().add({
+            duration: 3000,
+            title: 'Ingreso correcto',
+            description: 'Se ha ingresado correctamente el evento'
+        })
+
     }
     catch (err: any) {
-        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo agregar el nuevo usuario");
+        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo agregar el evento");
     }
     finally {
         guardandoNuevoEvento.value = false;
@@ -102,12 +125,19 @@ const borrandoEvento = ref(false);
 
 async function borrarEvento() {
     borrandoEvento.value = true
+    const nombreEventoBorrado = eventoBorrar.value?.titulo;
     try {
         await $fetch(`/api/eventos/${eventoBorrar.value?.id}`, {
             method: 'DELETE'
         })
         cerrarConfirmacionBorrar();
         await refresh();
+
+        useToast().add({
+            duration: 3000,
+            title: 'Eliminacion correcta',
+            description: `Se ha eliminado correctamente el evento ${nombreEventoBorrado}`
+        })
     }
     catch (err: any) {
 
@@ -182,7 +212,7 @@ function cerrarConfirmacionBorrar() {
 
 
     <Popups v-model:open="mostrarFormularioAgregar" title="Agregar evento">
-        <UForm class="space-y-4" :state="formularioNuevoEvento" schema="validarCrearEvento"
+        <UForm class="space-y-4" :state="formularioNuevoEvento" :schema="validarCrearEvento"
             @submit.prevent="guardarEvento">
             <!-- Titulo -->
             <UFormField label="Titulo" name="titulo" :ui="{ label: colorTextoFormulario }">

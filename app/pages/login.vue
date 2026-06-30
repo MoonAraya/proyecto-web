@@ -63,7 +63,7 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto/70 ring-2 rin
 
                 <!-- Ingreso de contraseña -->
                 <UFormField label="Contraseña" name="password" :ui="{ label: colorTextoFormulario }">
-                    <UInput v-model="formularioLogin.password" class="w-full" placeholder="Ej: ********"
+                    <UInput v-model="formularioLogin.password" type="password" class="w-full" placeholder="Ej: ********"
                         :ui="{ base: colorFondoCamposFormulario }" />
                 </UFormField>
 

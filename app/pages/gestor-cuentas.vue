@@ -63,6 +63,13 @@ async function guardarUsuario() {
         });
         cerrarFormularioAgregar();
         await refresh();
+
+        useToast().add({
+            duration: 3000,
+            title: 'Ingreso correcto',
+            description: 'Se ha ingresado correctamente al admin'
+        })
+
     }
     catch (err: any) {
         errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo agregar el nuevo usuario");
@@ -84,12 +91,19 @@ const borrandoUsuario = ref(false);
 
 async function borrarUsuario() {
     borrandoUsuario.value = true
+    const nombreUsuarioBorrar = usuarioBorrar.value?.nombre + ' ' + usuarioBorrar.value?.apellido;
     try {
         await $fetch(`/api/usuarios/${usuarioBorrar.value?.email}`, {
             method: 'DELETE'
         })
         cerrarConfirmacionBorrar();
         await refresh();
+
+        useToast().add({
+            duration: 3000,
+            title: 'Eliminado correctamente',
+            description: `Se elimino correctamente al admin ${nombreUsuarioBorrar}}`
+        })
     }
     catch (err: any) {
 
