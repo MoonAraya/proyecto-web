@@ -11,7 +11,7 @@ const validarCrearEvento = z.object({
     titulo: z.string().min(8, 'El evento debe tener al menos 8 caracteres').max(50, 'El evento debe tener a lo mas 50 caracteres'),
     fecha: z.string().min(1, 'Debe ingresar fecha'),
     hora: z.string().min(1, 'Debe ingresar hora'),
-    lugar: z.string().min(6, 'El lugar debe tener al menos 6 caracteres'),
+    lugar: z.string().min(5, 'El lugar debe tener al menos 5 caracteres'),
     valor: z.coerce.number('El valor debe ser un número')
 }).refine((info) => {
     //la condicion es por si no se ingresan valores como tal, que vaya para adelante y se valide con el fecha u otra minima
