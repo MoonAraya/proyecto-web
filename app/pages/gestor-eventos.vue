@@ -104,7 +104,7 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
 
             <!-- BOTON -->
             <UButton @click="mostrarFormularioAgregar = true"
-                class="bg-boton hover:bg-boton-hover text-texto font-bold py-2 px-4 rounded transition-colors">
+                class="bg-boton hover:bg-boton-hover text-texto py-2 px-4 rounded-md font-bold transition-colors">
                 Agregar Evento
             </UButton>
         </section>
