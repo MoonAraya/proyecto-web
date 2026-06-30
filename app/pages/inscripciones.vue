@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import type { Evento } from '~/types/evento';
 import type { Inscrito } from '~/types/inscrito';
+import { z } from 'zod';
 const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos/futuros');
 const { data: inscritos, pending: pendingInscritos } = await useFetch<Inscrito[]>('/api/inscritos');
+
+const validarInscripcion = z.object({
+    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener a lo mas 100 caracteres'),
+    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(50, 'El nombre debe tener a lo mas 50 caracteres'),
+    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(50, 'El apellido debe tener a lo mas 50 caracteres')
+})
 
 // comboBox de eventos
 const eventosOptions = computed(() =>

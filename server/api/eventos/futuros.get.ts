@@ -13,6 +13,8 @@ export default defineEventHandler(async () => {
             select: { inscritos:true }
             }
         },
+        /*
         take: 6,
+        */
     })
 })
