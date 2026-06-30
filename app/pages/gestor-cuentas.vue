@@ -19,7 +19,6 @@ const validarCrearAdmin = z.object({
 const { data: usuarios, pending, error, refresh } = await useFetch<Usuario[]>('/api/usuarios')
 
 // Agregar usuario
-const roles = ['Administrador']
 const mostrarFormularioAgregar = ref(false);
 const errorFormularioAgregar = ref('');
 const guardandoNuevoUsuario = ref(false);
@@ -28,7 +27,6 @@ const formularioNuevoUsuario = reactive({
     nombre: '',
     apellido: '',
     password: '',
-    rol: roles[0],
     email: ''
 })
 
@@ -36,7 +34,6 @@ function reiniciarFormularioAgregar() {
     formularioNuevoUsuario.nombre = '';
     formularioNuevoUsuario.apellido = '';
     formularioNuevoUsuario.password = '';
-    formularioNuevoUsuario.rol = roles[0];
     formularioNuevoUsuario.email = '';
     errorFormularioAgregar.value = '';
 }
@@ -58,7 +55,7 @@ async function guardarUsuario() {
                 password: formularioNuevoUsuario.password,
                 nombre: formularioNuevoUsuario.nombre,
                 apellido: formularioNuevoUsuario.apellido,
-                rol: formularioNuevoUsuario.rol
+                rol: 'Administrador'
             }
         });
         cerrarFormularioAgregar();
