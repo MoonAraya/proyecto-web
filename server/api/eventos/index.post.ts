@@ -11,7 +11,7 @@ export default defineEventHandler(async(event) => {
     const fechaParaBd = new Date(`${fechaNormalizada}T${horaNormalizada}:00`);
 
 
-    let ruta = 'img/default.jpg';
+    let ruta = '/img/default.jpg';
 
     if (archivoBase64) {
         const base64Limpio = archivoBase64.split(';base64,').pop();

@@ -84,7 +84,7 @@ const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/
             <div class="max-w-7xl mx-auto">
                 <!-- // div titulo proximos eventos -->
                 <div class="flex items-end justify-between mb-8">
-                    <div clase="space-y-5">
+                    <div class="space-y-5">
                         <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
                     </div>
                 </div>
