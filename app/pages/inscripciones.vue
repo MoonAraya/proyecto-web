@@ -21,7 +21,9 @@ const formularioEvento = reactive({
     eventoId: undefined,
 })
 
-// const eventoSeleccionado = ref<{ id: number, label: string } | undefined>(undefined)
+// Para vista de los campos del formulario
+const colorTextoFormulario = 'text-texto-formulario';
+const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
 
 function limpiarFormulario() {
     formularioEvento.email = ''
@@ -71,30 +73,29 @@ async function guardarInscripcion() {
 
                 <form class="flex flex-col gap-5" @submit.prevent="guardarInscripcion">
 
-                    <!-- nombre -->
-                    <UFormField label="Nombre" name="nombre" :ui="{ label: 'text-texto-formulario font-medium' }">
-                        <UInput v-model="formularioEvento.nombre" class="w-full" color="neutral" variant="outline"
-                            placeholder="Ej: Juan" />
+                    <UFormField label="Nombre" name="nombre" :ui="{ label: colorTextoFormulario }">
+                        <UInput v-model="formularioEvento.nombre" class="w-full" placeholder="Ej: Juanito"
+                            :ui="{ base: colorFondoCamposFormulario }" />
                     </UFormField>
 
-                    <!-- apellido -->
-                    <UFormField label="Apellido" name="apellido" :ui="{ label: 'text-texto-formulario font-medium' }">
-                        <UInput v-model="formularioEvento.apellido" class="w-full" color="neutral" variant="outline"
-                            placeholder="Ej: Pérez" />
+                    <!-- campo apellido -->
+                    <UFormField label="Apellido" name="apellido" :ui="{ label: colorTextoFormulario }">
+                        <UInput v-model="formularioEvento.apellido" class="w-full" placeholder="Ej: Perez"
+                            :ui="{ base: colorFondoCamposFormulario }" />
                     </UFormField>
 
-                    <!-- email -->
-                    <UFormField label="Email" name="email" :ui="{ label: 'text-texto-formulario font-medium' }">
-                        <UInput v-model="formularioEvento.email" class="w-full" color="neutral" variant="outline"
-                            placeholder="Ej: jperez@correo.cl" />
+                    <!-- campo email -->
+                    <UFormField label="Email" name="email" :ui="{ label: colorTextoFormulario }">
+                        <UInput v-model="formularioEvento.email" class="w-full" placeholder="Ej: jperez@usm.cl"
+                            :ui="{ base: colorFondoCamposFormulario }" />
                     </UFormField>
 
                     <!-- selector de evento -->
-                    <UFormField label="Evento" name="eventoId" :ui="{ label: 'text-texto-formulario font-medium' }">
+                    <UFormField label="Evento" name="eventoId" :ui="{ label: colorTextoFormulario }">
                         <USelectMenu v-model="formularioEvento.eventoId" :items="eventosOptions" value-key="id"
-                            label-key="label" class="w-full" color="neutral" variant="outline"
-                            placeholder="Seleccione un evento" :loading="pending"
-                            :search-input="{ placeholder: 'Buscar evento', icon: 'i-lucide-search' }" />
+                            label-key="label" class="w-full" placeholder="Seleccione un evento" :loading="pending"
+                            :search-input="{ placeholder: 'Buscar evento', icon: 'i-lucide-search' }"
+                            :ui="{ base: colorFondoCamposFormulario }" />
                     </UFormField>
 
                     <!-- mensaje de error -->
