@@ -65,7 +65,7 @@ async function logout() {
         </div>
     </div>
     <main class="bg-fondo-general/95 min-h-screen">
-        <div class="class= max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
+        <div class="class= max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12">
             <slot />
         </div>
     </main>
