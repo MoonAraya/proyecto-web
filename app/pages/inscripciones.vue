@@ -6,9 +6,9 @@ const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/ap
 const { data: inscritos, pending: pendingInscritos } = await useFetch<Inscrito[]>('/api/inscritos');
 
 const validarInscripcion = z.object({
-    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener a lo mas 100 caracteres'),
-    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(50, 'El nombre debe tener a lo mas 50 caracteres'),
-    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(50, 'El apellido debe tener a lo mas 50 caracteres')
+    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener como máximo 100 caracteres'),
+    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(50, 'El nombre debe tener como máximo 50 caracteres'),
+    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(50, 'El apellido debe tener como máximo 50 caracteres')
 })
 
 // comboBox de eventos
@@ -78,8 +78,9 @@ async function guardarInscripcion() {
                 <h2 class="text-texto font-bold text-xl mb-1">Inscribirse a un evento</h2>
                 <p class="text-texto/70 text-sm mb-6">Ingrese sus datos para inscribirse</p>
 
-                <form class="flex flex-col gap-5" @submit.prevent="guardarInscripcion">
-
+                <UForm class="flex flex-col gap-5" @submit.prevent="guardarInscripcion" :schema="validarInscripcion"
+                    :state="formularioEvento">
+                    <!-- campo nombre -->
                     <UFormField label="Nombre" name="nombre" :ui="{ label: colorTextoFormulario }">
                         <UInput v-model="formularioEvento.nombre" class="w-full" placeholder="Ej: Juanito"
                             :ui="{ base: colorFondoCamposFormulario }" />
@@ -101,8 +102,13 @@ async function guardarInscripcion() {
                     <UFormField label="Evento" name="eventoId" :ui="{ label: colorTextoFormulario }">
                         <USelectMenu v-model="formularioEvento.eventoId" :items="eventosOptions" value-key="id"
                             label-key="label" class="w-full" placeholder="Seleccione un evento" :loading="pending"
-                            :search-input="{ placeholder: 'Buscar evento', icon: 'i-lucide-search' }"
-                            :ui="{ base: colorFondoCamposFormulario }" />
+                            :search-input="{ placeholder: 'Buscar evento', icon: 'i-lucide-search' }" :ui="{
+                                base: colorFondoCamposFormulario,
+                                content: 'bg-fondo-card border border-fondo-login',
+                                item: 'data-highlighted:bg-fondo-login data-highlighted:text-texto',
+                                itemLabel: 'text-texto',
+                                label: 'text-texto-formulario'
+                            }" />
                     </UFormField>
 
                     <!-- mensaje de error -->
@@ -115,18 +121,19 @@ async function guardarInscripcion() {
                         Inscribirse
                     </UButton>
 
-                </form>
+                </UForm>
             </div>
         </aside>
 
         <main class="flex-1">
+            <!-- div eventos futuros (para inscribirse) -->
             <div class="mb-6">
-                <h1 class="text-3xl font-bold text-texto mb-4">Eventos</h1>
+                <h1 class="text-3xl font-bold text-texto mb-4">Próximos Eventos</h1>
                 <p class="text-texto/70 mt-1">Eventos a los que puedes inscribirte.</p>
             </div>
             <!-- // loop eventos -->
             <div class="max-w-7xl mx-auto">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     <EventoCards v-for="evento in eventos" :evento="evento" />
                 </div>
             </div>

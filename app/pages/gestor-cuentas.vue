@@ -9,10 +9,10 @@ definePageMeta({
 })
 
 const validarCrearAdmin = z.object({
-    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener a lo mas 100 caracteres'),
-    password: z.string().min(8, 'La contraseña debe tener como minimo 8 caracteres'),
-    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(50, 'El nombre debe tener a lo mas 50 caracteres'),
-    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(50, 'El apellido debe tener a lo mas 50 caracteres')
+    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener como máximo 100 caracteres'),
+    password: z.string().min(8, 'La contraseña debe tener como mínimo 8 caracteres'),
+    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(50, 'El nombre debe tener como máximo 50 caracteres'),
+    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(50, 'El apellido debe tener como máximo 50 caracteres')
 })
 
 // para tomar la informacion de los usuarios en la tabla usuario
@@ -144,7 +144,7 @@ const tableMeta = createTableMeta<Usuario>()
                     STAFF
                 </h1>
                 <p class="mt-3 max-w-2xl text-base leading-7 text-texto/70">
-                    Vista para gestionar cuentas del staff.
+                    Gestor de cuentas del staff.
                 </p>
             </div>
 

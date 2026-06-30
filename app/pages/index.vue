@@ -28,61 +28,11 @@ const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/
             </div>
         </section>
 
-        <!-- //proximos eventos -->
-        <!-- <div class="mx-auto max-w-2xl sm:text-center">
-            <div class="space-y-5">
-                <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
-            </div>
-        </div>
-        <section class="mx-auto justify-around grid gap-6 md:grid-cols-3"">
-           //loop de cards con divs no article  PLACEHOLDERS
-            <article class=" rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-            <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-            <p class="mt-2 text-sm leading-6 text-texto/70">
-                TEXTO PLACEHOLDER
-            </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-
-            <article class="rounded-xl border border-course-line bg-course-surface p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-texto">PLACEHOLDER</h3>
-                <p class="mt-2 text-sm leading-6 text-texto/70">
-                    TEXTO PLACEHOLDER
-                </p>
-            </article>
-        </section> -->
-
-        <!-- //Próximos eventos -->
+        <!-- //TODOS LOS eventos -->
 
         <section class="py-16 px-6">
             <div class="max-w-7xl mx-auto">
-                <!-- // div titulo proximos eventos -->
+                <!-- // div titulo eventos -->
                 <div class="flex items-end justify-between mb-8">
                     <div class="space-y-5">
                         <h2 class="text-3xl font-bold tracking-tight text-texto sm:text-4xl">Próximos eventos</h2>
