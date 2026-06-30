@@ -195,19 +195,6 @@ function cerrarConfirmacionBorrar() {
             <!-- loop de cards con divs no article -->
             <EventoCardsAdmin v-for="evento in eventos" :evento="evento" @borrar-evento="confirmarBorrarEvento" />
         </section>
-        <!-- Próximos eventos -->
-        <!-- <section class="py-16 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex items-end justify-between mb-8">
-                    <div>
-                        <h2 class="text-3xl font-bold text-brand-text">Próximos eventos</h2>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <EventoCard v-for="evento in eventosProximos" :evento="evento" /> //en el script de esta pagina
-                </div>
-            </div>
-        </section> -->
     </div>
 
 

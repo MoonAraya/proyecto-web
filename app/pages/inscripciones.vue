@@ -78,7 +78,8 @@ async function guardarInscripcion() {
                 <h2 class="text-texto font-bold text-xl mb-1">Inscribirse a un evento</h2>
                 <p class="text-texto/70 text-sm mb-6">Ingrese sus datos para inscribirse</p>
 
-                <form class="flex flex-col gap-5" @submit.prevent="guardarInscripcion">
+                <UForm class="flex flex-col gap-5" @submit.prevent="guardarInscripcion" :schema="validarInscripcion"
+                    :state="formularioEvento">
                     <!-- campo nombre -->
                     <UFormField label="Nombre" name="nombre" :ui="{ label: colorTextoFormulario }">
                         <UInput v-model="formularioEvento.nombre" class="w-full" placeholder="Ej: Juanito"
@@ -101,8 +102,13 @@ async function guardarInscripcion() {
                     <UFormField label="Evento" name="eventoId" :ui="{ label: colorTextoFormulario }">
                         <USelectMenu v-model="formularioEvento.eventoId" :items="eventosOptions" value-key="id"
                             label-key="label" class="w-full" placeholder="Seleccione un evento" :loading="pending"
-                            :search-input="{ placeholder: 'Buscar evento', icon: 'i-lucide-search' }"
-                            :ui="{ base: colorFondoCamposFormulario }" />
+                            :search-input="{ placeholder: 'Buscar evento', icon: 'i-lucide-search' }" :ui="{
+                                base: colorFondoCamposFormulario,
+                                content: 'bg-fondo-card border border-fondo-login',
+                                item: 'data-highlighted:bg-fondo-login data-highlighted:text-texto',
+                                itemLabel: 'text-texto',
+                                label: 'text-texto-formulario'
+                            }" />
                     </UFormField>
 
                     <!-- mensaje de error -->
@@ -115,7 +121,7 @@ async function guardarInscripcion() {
                         Inscribirse
                     </UButton>
 
-                </form>
+                </UForm>
             </div>
         </aside>
 
