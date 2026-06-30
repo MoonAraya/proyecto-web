@@ -9,7 +9,85 @@ import { z } from 'zod';
 
 const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
 
+// Agregar evento
+const roles = ['Administrador']
+const mostrarFormularioAgregar = ref(false);
+const errorFormularioAgregar = ref('');
+const guardandoNuevoEvento = ref(false);
 
+const formularioNuevoEvento = reactive({
+    titulo: '',
+    fecha: '',
+    hora: '',
+    lugar: '',
+    //Para imagen
+    nombre: '',
+    nombreArchivo: '',
+    archivoBase64: '',
+
+    valor: undefined
+})
+
+function reiniciarFormularioAgregar() {
+    formularioNuevoEvento.titulo = '';
+    formularioNuevoEvento.fecha = '';
+    formularioNuevoEvento.hora = '';
+    formularioNuevoEvento.lugar = '';
+    formularioNuevoEvento.nombre = '';
+    formularioNuevoEvento.nombreArchivo = '';
+    formularioNuevoEvento.archivoBase64 = '';
+    formularioNuevoEvento.valor = undefined;
+    errorFormularioAgregar.value = '';
+}
+
+function cerrarFormularioAgregar() {
+    mostrarFormularioAgregar.value = false;
+    reiniciarFormularioAgregar();
+}
+
+// Para leer el archivo del pc y transformar a texto
+function alSeleccionarArchivo(event: any) {
+    const archivo = event.target.files[0]
+    if (archivo) {
+        formularioNuevoEvento.nombreArchivo = archivo.name
+
+        const reader = new FileReader()
+        reader.onload = (event: any) => {
+            formularioNuevoEvento.archivoBase64 = event.target.result // Aquí queda guardado como texto largo
+        }
+        reader.readAsDataURL(archivo)
+    }
+}
+
+// Para agregar
+
+async function guardarEvento() {
+    guardandoNuevoEvento.value = true;
+    errorFormularioAgregar.value = '';
+    try {
+        await $fetch('/api/eventos', {
+            method: 'POST',
+            body: {
+                titulo: formularioNuevoEvento.titulo,
+                fecha: formularioNuevoEvento.fecha,
+                hora: formularioNuevoEvento.hora,
+                lugar: formularioNuevoEvento.lugar,
+                nombre: formularioNuevoEvento.nombre,
+                nombreArchivo: formularioNuevoEvento.nombreArchivo,
+                archivoBase64: formularioNuevoEvento.archivoBase64,
+                valor: formularioNuevoEvento.valor
+            }
+        });
+        cerrarFormularioAgregar();
+        await refresh();
+    }
+    catch (err: any) {
+        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo agregar el nuevo usuario");
+    }
+    finally {
+        guardandoNuevoEvento.value = false;
+    }
+}
 
 
 </script>
