@@ -6,6 +6,14 @@ definePageMeta({
 
 import type { Evento } from '../types/evento'
 import { z } from 'zod';
+/*
+const validarCrearEvento = z.object({
+    titulo: z.string().min(8, 'El evento debe tener al menos 8 caracteres').max(50, 'El evento debe tener a lo mas 50 caracteres')
+    fecha: z.date()
+    nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres.').max(20, 'El nombre debe tener a lo mas 20 caracteres'),
+    apellido: z.string().min(2, 'El apellido debe tener al menos 2 caracteres.').max(20, 'El apellido debe tener a lo mas 20 caracteres')
+})
+*/
 
 const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
 
@@ -174,7 +182,8 @@ function cerrarConfirmacionBorrar() {
 
 
     <Popups v-model:open="mostrarFormularioAgregar" title="Agregar evento">
-        <UForm class="space-y-4" :state="formularioNuevoEvento" @submit.prevent="guardarEvento">
+        <UForm class="space-y-4" :state="formularioNuevoEvento" schema="validarCrearEvento"
+            @submit.prevent="guardarEvento">
             <!-- Titulo -->
             <UFormField label="Titulo" name="titulo" :ui="{ label: colorTextoFormulario }">
                 <UInput v-model="formularioNuevoEvento.titulo" class="w-full" placeholder="Ej: Teatro Ballet"
