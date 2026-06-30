@@ -30,7 +30,7 @@ const formularioEvento = reactive({
 
 // Para vista de los campos del formulario
 const colorTextoFormulario = 'text-texto-formulario';
-const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
+const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario hover:bg-fondo-card';
 
 function limpiarFormulario() {
     formularioEvento.email = ''

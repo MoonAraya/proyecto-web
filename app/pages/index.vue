@@ -19,11 +19,7 @@ const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/
             <div class="flex justify-center items-center gap-x-6">
                 <NuxtLink to="/inscripciones"
                     class="rounded-md bg-boton px-3.5 py-2.5 text-sm font-semibold text-texto shadow-sm hover:bg-boton-hover focus-visible:outline-offset-2 focus-visible:outline-boton">
-                    Inscribirse
-                </NuxtLink>
-                <NuxtLink to="/#" class="text-sm font-semibold leading-6 text-texto/70 hover:text-texto">Ver lista
-                    de
-                    eventos
+                    Inscribirse a un evento
                 </NuxtLink>
             </div>
         </section>
