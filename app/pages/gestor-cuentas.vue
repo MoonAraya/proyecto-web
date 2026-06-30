@@ -85,6 +85,7 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
 const usuarioBorrar = ref<Usuario | null>(null);
 const mostrarConfirmacionBorrar = ref(false);
 const borrandoUsuario = ref(false);
+const errorBorrar = ref('');
 
 async function borrarUsuario() {
     borrandoUsuario.value = true
@@ -103,7 +104,7 @@ async function borrarUsuario() {
         })
     }
     catch (err: any) {
-
+        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo borrar el usuario");
     }
     finally {
         borrandoUsuario.value = false;

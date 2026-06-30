@@ -122,6 +122,7 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
 const eventoBorrar = ref<Evento | null>(null);
 const mostrarConfirmacionBorrar = ref(false);
 const borrandoEvento = ref(false);
+const errorBorrar = ref('');
 
 async function borrarEvento() {
     borrandoEvento.value = true
@@ -140,7 +141,7 @@ async function borrarEvento() {
         })
     }
     catch (err: any) {
-
+        errorBorrar.value = getApiErrorMessage(err, "No se pudo borrar el evento");
     }
     finally {
         borrandoEvento.value = false;
