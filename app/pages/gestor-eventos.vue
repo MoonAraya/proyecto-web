@@ -9,9 +9,85 @@ import { z } from 'zod';
 
 const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/api/eventos')
 
+// Agregar evento
+const roles = ['Administrador']
+const mostrarFormularioAgregar = ref(false);
+const errorFormularioAgregar = ref('');
+const guardandoNuevoEvento = ref(false);
 
+const formularioNuevoEvento = reactive({
+    titulo: '',
+    fecha: '',
+    hora: '',
+    lugar: '',
+    // Para imagen
+    nombreArchivo: '',
+    archivoBase64: '',
+    valor: undefined
+})
 
+function reiniciarFormularioAgregar() {
+    formularioNuevoEvento.titulo = '';
+    formularioNuevoEvento.fecha = '';
+    formularioNuevoEvento.hora = '';
+    formularioNuevoEvento.lugar = '';
+    formularioNuevoEvento.nombreArchivo = '';
+    formularioNuevoEvento.archivoBase64 = '';
+    formularioNuevoEvento.valor = undefined;
+    errorFormularioAgregar.value = '';
+}
 
+function cerrarFormularioAgregar() {
+    mostrarFormularioAgregar.value = false;
+    reiniciarFormularioAgregar();
+}
+
+// Para leer el archivo del pc y transformar a texto
+function alSeleccionarArchivo(event: any) {
+    const archivo = event.target.files[0]
+    if (archivo) {
+        formularioNuevoEvento.nombreArchivo = archivo.name
+
+        const reader = new FileReader()
+        reader.onload = (event: any) => {
+            formularioNuevoEvento.archivoBase64 = event.target.result // Aquí queda guardado como texto largo
+        }
+        reader.readAsDataURL(archivo)
+    }
+}
+
+// Para agregar
+
+async function guardarEvento() {
+    guardandoNuevoEvento.value = true;
+    errorFormularioAgregar.value = '';
+    try {
+        await $fetch('/api/eventos', {
+            method: 'POST',
+            body: {
+                titulo: formularioNuevoEvento.titulo,
+                fecha: formularioNuevoEvento.fecha,
+                hora: formularioNuevoEvento.hora,
+                lugar: formularioNuevoEvento.lugar,
+                nombreArchivo: formularioNuevoEvento.nombreArchivo,
+                archivoBase64: formularioNuevoEvento.archivoBase64,
+                valor: formularioNuevoEvento.valor
+            }
+        });
+        cerrarFormularioAgregar();
+        await refresh();
+    }
+    catch (err: any) {
+        errorFormularioAgregar.value = getApiErrorMessage(err, "No se pudo agregar el nuevo usuario");
+    }
+    finally {
+        guardandoNuevoEvento.value = false;
+    }
+}
+
+// Para vista de los campos del formulario
+const colorTextoFormulario = 'text-texto-formulario';
+const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
 </script>
 <!-- IDEA: BOTON MODAL PARA CADA EVENTO QUE ABRA UN COMBO BOX CON LA LISTA DE INSCRITOS PARA ELIMINARLO -->
 <template>
@@ -29,9 +105,10 @@ const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/ap
             </div>
 
             <!-- BOTON -->
-            <button class="bg-texto hover:bg-brand-hover texto-texto/70 font-bold py-2 px-4 rounded">
+            <UButton @click="mostrarFormularioAgregar = true"
+                class="bg-boton hover:bg-boton-hover text-texto font-bold py-2 px-4 rounded transition-colors">
                 Agregar Evento
-            </button>
+            </UButton>
         </section>
 
         <!-- LA IDEA ES QUE CADA EVENTO TENGA SUS PROPIOS BOTONES DE MANTENEDOR? -->
@@ -62,7 +139,65 @@ const { data: eventos, pending, error, refresh } = await useFetch<Evento[]>('/ap
     </div>
 
 
+    <Popups v-model:open="mostrarFormularioAgregar" title="Agregar evento">
+        <UForm class="space-y-4" :state="formularioNuevoEvento" @submit.prevent="guardarEvento">
+            <!-- Titulo -->
+            <UFormField label="Titulo" name="titulo" :ui="{ label: colorTextoFormulario }">
+                <UInput v-model="formularioNuevoEvento.titulo" class="w-full" placeholder="Ej: Teatro Ballet"
+                    :ui="{ base: colorFondoCamposFormulario }" />
+            </UFormField>
 
+            <!-- campo fecha -->
+            <UFormField label="Fecha" name="fecha" :ui="{ label: colorTextoFormulario }">
+                <UInput type="date" v-model="formularioNuevoEvento.fecha" class="w-full"
+                    :ui="{ base: colorFondoCamposFormulario }" />
+            </UFormField>
+
+            <!-- campo hora -->
+            <UFormField label="Hora" name="hora" :ui="{ label: colorTextoFormulario }">
+                <UInput type="time" v-model="formularioNuevoEvento.hora" class="w-full"
+                    :ui="{ base: colorFondoCamposFormulario }" />
+            </UFormField>
+
+            <!-- campo lugar -->
+            <UFormField label="Lugar" name="lugar" :ui="{ label: colorTextoFormulario }">
+                <UInput v-model="formularioNuevoEvento.lugar" class="w-full" placeholder="Ej: Viña del Mar."
+                    :ui="{ base: colorFondoCamposFormulario }" />
+            </UFormField>
+
+            <!-- imagen como tal -->
+            <UFormField label="Seleccionar Archivo" name="archivoBase64" :ui="{ label: colorTextoFormulario }">
+                <div class="flex flex-col gap-1">
+                    <UInput type="file" accept="image/*" class="w-full" @change="alSeleccionarArchivo"
+                        :ui="{ base: colorFondoCamposFormulario }" />
+                    <p v-if="formularioNuevoEvento.nombreArchivo" class="text-sm text-texto-formulario font-semibold">
+                        Imagen seleccionada: {{ formularioNuevoEvento.nombreArchivo }}</p>
+                </div>
+            </UFormField>
+
+
+
+            <!-- valor -->
+            <UFormField label="Valor" name="valor" :ui="{ label: colorTextoFormulario }">
+                <UInput v-model="formularioNuevoEvento.valor" class="w-full" placeholder="Ej: 4500"
+                    :ui="{ base: colorFondoCamposFormulario }" />
+            </UFormField>
+
+            <div class="flex items-center justify-between gap-4 p-2">
+                <!-- Boton cancelar -->
+                <UButton type="button" @click="cerrarFormularioAgregar"
+                    class="bg-boton text-texto py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors">
+                    Cancelar
+                </UButton>
+
+                <!-- Boton agregar -->
+                <UButton type="submit" :loading="guardandoNuevoEvento"
+                    class="bg-boton text-texto py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors">
+                    Agregar evento
+                </UButton>
+            </div>
+        </UForm>
+    </Popups>
 
 
 </template>
