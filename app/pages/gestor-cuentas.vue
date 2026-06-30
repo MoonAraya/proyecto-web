@@ -143,7 +143,7 @@ const tableMeta = createTableMeta<Usuario>()
                     STAFF
                 </h1>
                 <p class="mt-3 max-w-2xl text-base leading-7 text-texto/70">
-                    Vista para gestionar cuentas del staff.
+                    Gestor de cuentas del staff.
                 </p>
             </div>
 
