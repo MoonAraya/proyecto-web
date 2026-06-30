@@ -86,6 +86,42 @@ async function guardarEvento() {
 // Para vista de los campos del formulario
 const colorTextoFormulario = 'text-texto-formulario';
 const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
+
+// Para borrar evento
+const eventoBorrar = ref<Evento | null>(null);
+const mostrarConfirmacionBorrar = ref(false);
+const borrandoEvento = ref(false);
+
+async function borrarEvento() {
+    borrandoEvento.value = true
+    try {
+        await $fetch(`/api/eventos/${eventoBorrar.value?.id}`, {
+            method: 'DELETE'
+        })
+        cerrarConfirmacionBorrar();
+        await refresh();
+    }
+    catch (err: any) {
+
+    }
+    finally {
+        borrandoEvento.value = false;
+    }
+}
+// Para confirmar la eliminacion del evento
+function confirmarBorrarEvento(evento: Evento) {
+    eventoBorrar.value = evento;
+    mostrarConfirmacionBorrar.value = true;
+}
+// Para cerrar la confirmacion
+function cerrarConfirmacionBorrar() {
+    mostrarConfirmacionBorrar.value = false;
+    eventoBorrar.value = null;
+}
+
+
+
+
 </script>
 <!-- IDEA: BOTON MODAL PARA CADA EVENTO QUE ABRA UN COMBO BOX CON LA LISTA DE INSCRITOS PARA ELIMINARLO -->
 <template>
@@ -119,7 +155,7 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
 
         <section class="mx-auto justify-around grid gap-6 md:grid-cols-3">
             <!-- loop de cards con divs no article -->
-            <EventoCards v-for="evento in eventos" :evento="evento" />
+            <EventoCardsAdmin v-for="evento in eventos" :evento="evento" @borrar-evento="confirmarBorrarEvento" />
         </section>
         <!-- Próximos eventos -->
         <!-- <section class="py-16 px-6">
@@ -193,5 +229,20 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto-formulario';
         </UForm>
     </Popups>
 
+    <!-- Confirmar borrar evento -->
+    <Popups v-model:open="mostrarConfirmacionBorrar" title="Borrar evento"
+        :description="eventoBorrar ? `¿Estas seguro que deseas borrar el evento ${eventoBorrar.titulo}? Esta decisión es permanente` : ''">
+        <!-- div con los 2 botones para cancelar o confirmar -->
+        <div class="flex justify-between items-center gap-6">
+            <!-- cancelar -->
+            <UButton @click="cerrarConfirmacionBorrar"
+                class="w-full bg-boton text-texto text-center justify-center py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors"
+                type="button">Cancelar</UButton>
+            <!-- confirmar -->
+            <UButton @click="borrarEvento"
+                class="w-full bg-boton-eliminar text-white text-center justify-center py-2 px-4 rounded-md hover:bg-boton-eliminar-hover font-bold transition-colors"
+                type="button" :loading="borrandoEvento">Confirmar</UButton>
+        </div>
+    </Popups>
 
 </template>
