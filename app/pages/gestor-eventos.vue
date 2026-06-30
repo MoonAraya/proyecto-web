@@ -24,7 +24,7 @@ const validarCrearEvento = z.object({
 
     return fechaHora > momentoactual
 }, {
-    message: 'La fecha y hora deben ser en un momento futuro',
+    message: 'La fecha y hora deben ser posteriores a la fecha y hora actual',
     path: ['hora']
 }
 )
