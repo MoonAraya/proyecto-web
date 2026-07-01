@@ -9,7 +9,7 @@ const busquedaRealizada = ref(false)
 const eventosAsociados = ref<Evento[]>([])
 
 const validarCorreo = z.object({
-    email: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener a lo mas 100 caracteres')
+    correo: z.email({ message: 'Debe ingresar un email válido.' }).max(100, 'El correo debe tener a lo mas 100 caracteres')
 })
 
 const formularioCorreo = reactive({
@@ -24,7 +24,6 @@ function reiniciarCampoCorreo() {
 }
 */
 async function buscarInscripciones() {
-    const resultado = validarCorreo.safeParse({ email: formularioCorreo.correo })
 
     buscandoEventos.value = true
     errorBuscar.value = ''
@@ -53,9 +52,12 @@ async function buscarInscripciones() {
         <h2 class="text-2xl text-texto text-center">Ingrese su correo para ver los eventos</h2>
 
         <div class="max-w-lg mx-auto gap-4 flex flex-col w-full">
-            <UForm class="w-full" @submit.prevent="buscarInscripciones">
-                <UInput v-model="formularioCorreo.correo" class="w-full" placeholder="Ej: juanito@gmail.com"
-                    :ui="{ base: 'bg-fondo-general/90 text-texto-formulario' }" />
+            <UForm class="w-full" @submit.prevent="buscarInscripciones" :state="formularioCorreo"
+                :schema="validarCorreo">
+                <UFormField name="correo">
+                    <UInput v-model="formularioCorreo.correo" class="w-full" placeholder="Ej: juanito@gmail.com"
+                        :ui="{ base: 'bg-fondo-general/90 text-texto-formulario' }" />
+                </UFormField>
             </UForm>
 
             <div class="flex gap-3">
