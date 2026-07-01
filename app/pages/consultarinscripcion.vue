@@ -80,7 +80,7 @@ async function buscarInscripciones() {
         </div>
     </div>
     <!-- cards eventos asociados -->
-    <div v-if="busquedaRealizada && eventosAsociados.length !== 0"
+    <div v-if="busquedaRealizada && eventosAsociados.length > 0"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
         <EventoCards v-for="evento in eventosAsociados" :key="evento.id" :evento="evento" />
     </div>
