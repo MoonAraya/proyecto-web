@@ -10,7 +10,7 @@ const { data: futurosEventos, pending, error } = await useFetch<Evento[]>('/api/
     <div class="space-y-8">
         <!-- // actua como hero -->
         <section class="mx-auto max-w-2xl sm:text-center">
-            <div class="space-y-5">
+            <div class="space-y-5 flex flex-col items-center justify-center text-center">
                 <h1 class="text-4xl font-bold tracking-tight text-texto sm:text-6xl">Bienvenido a Smart Events</h1>
                 <p class="text-lg leading-8 text-texto/70">Para nosotros, tú eres el centro de cada experiencia. Explora
                     nuestro catálogo y acompáñanos en los eventos más entretenidos.</p>
