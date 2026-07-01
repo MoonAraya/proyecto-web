@@ -51,7 +51,7 @@ const colorFondoCamposFormulario = 'bg-fondo-general/90 text-texto/70 ring-2 rin
     <div class="flex min-h-screen items-center justify-center">
         <!-- div donde salen todas las cosas del login -->
         <div
-            class="rounded-lg bg-fondo-login flex flex-col items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6 md:py-8 border-2 border-boton shadow-2xl">
+            class="rounded-lg bg-fondo-card flex flex-col items-center px-4 sm:px-6 md:px-12 py-4 sm:py-6 md:py-8 border-2 border-boton shadow-2xl">
             <h2 class="font-bold text-3xl py-4 text-texto">Iniciar Sesión</h2>
             <p class="mb-4 text-texto/70">Ingrese su correo y contraseña</p>
             <UForm class="space-y-5" :state="formularioLogin" :schema="validarLogin" @submit="login">
