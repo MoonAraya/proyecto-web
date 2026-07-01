@@ -63,7 +63,7 @@ async function guardarUsuario() {
 
         useToast().add({
             duration: 3000,
-            title: 'Ingreso correcto',
+            title: 'Ha agregado un nuevo administrador.',
             description: 'El admin se registrado correctamente.',
             ui: {
                 root: 'bg-fondo-card border border-fondo-login',
@@ -104,7 +104,7 @@ async function borrarUsuario() {
 
         useToast().add({
             duration: 3000,
-            title: 'Eliminado correctamente',
+            title: 'Ha eliminado a un usuario.',
             description: `Se elimino correctamente al admin ${nombreUsuarioBorrar}.`,
             ui: {
                 root: 'bg-fondo-card border border-fondo-login',
