@@ -142,7 +142,7 @@ async function borrarEvento() {
 
         useToast().add({
             duration: 3000,
-            title: 'Eliminacion correcta',
+            title: 'Ha eliminado un evento.',
             description: `Se ha eliminado correctamente el evento ${nombreEventoBorrado}.`,
             ui: {
                 root: 'bg-fondo-card border border-fondo-login',
@@ -254,8 +254,13 @@ async function borrarInscripcion() {
 
         useToast().add({
             duration: 3000,
-            title: 'Eliminacion correcta',
-            description: `Se ha eliminado correctamente la inscripcion ${nombreInscripcionBorrada} del evento ${eventoNombre}`
+            title: 'Ha eliminado un participante.',
+            description: `Se ha eliminado correctamente al participante ${nombreInscripcionBorrada} del evento ${eventoNombre}`,
+            ui: {
+                root: 'bg-fondo-card border border-fondo-login',
+                title: 'text-texto font-bold',
+                description: 'text-texto-formulario'
+            }
         })
     }
     catch (err: any) {
