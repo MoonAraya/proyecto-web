@@ -103,7 +103,12 @@ async function guardarEvento() {
         useToast().add({
             duration: 3000,
             title: 'Ingreso correcto',
-            description: 'Se ha ingresado correctamente el evento'
+            description: 'El evento se agregó correctamente.',
+            ui: {
+                root: 'bg-fondo-card border border-fondo-login',
+                title: 'text-texto font-bold',
+                description: 'text-texto-formulario'
+            }
         })
 
     }
@@ -138,7 +143,12 @@ async function borrarEvento() {
         useToast().add({
             duration: 3000,
             title: 'Eliminacion correcta',
-            description: `Se ha eliminado correctamente el evento ${nombreEventoBorrado}`
+            description: `Se ha eliminado correctamente el evento ${nombreEventoBorrado}.`,
+            ui: {
+                root: 'bg-fondo-card border border-fondo-login',
+                title: 'text-texto font-bold',
+                description: 'text-texto-formulario'
+            }
         })
     }
     catch (err: any) {

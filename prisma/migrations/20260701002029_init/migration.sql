@@ -30,6 +30,7 @@ CREATE TABLE `Inscrito` (
     `eventoId` INTEGER NOT NULL,
 
     INDEX `Inscrito_eventoId_idx`(`eventoId`),
+    UNIQUE INDEX `Inscrito_email_eventoId_key`(`email`, `eventoId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
