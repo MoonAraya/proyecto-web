@@ -12,6 +12,6 @@ export const defaultColumnMeta = {
 
 export const createTableMeta = <T>() => ({
     class: {
-        tr: (_row:TableRow<T>) => 'cursor-pointer transition-colors duration-150 hover: bg-boton-hover/10',
+        tr: (_row: TableRow<T>) => 'cursor-pointer transition-colors duration-150 hover:bg-fondo-login/50',
     }
 })
