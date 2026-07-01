@@ -26,3 +26,4 @@ logs
 /generated/prisma
 
 /public/img
+prisma/migrations
