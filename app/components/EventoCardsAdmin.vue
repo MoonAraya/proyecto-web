@@ -7,7 +7,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-    'borrar-evento': [evento: Evento]
+    'borrar-evento': [evento: Evento],
+    'ver-inscripciones': [evento: Evento]
 }>()
 
 const fechaFormateada = computed(() => formatFechaCorta(props.evento.fecha))
@@ -55,8 +56,12 @@ const horaFormateada = computed(() => formatHora(props.evento.fecha))
                 </div>
             </div>
 
-            <!-- boton para borrar la card -->
-            <div class="mt-4 pt-3 border-t border-fondo-login">
+            <!-- botones para borrar y para ver inscripciones -->
+            <div class="mt-4 pt-3 border-t border-fondo-login flex gap-3 justify-between">
+                <UButton @click="emit('ver-inscripciones', props.evento)"
+                    class="w-full bg-boton hover:bg-boton-hover text-texto font-semibold text-sm py-2 px-4 rounded-xl transition-colors cursor-pointer flex justify-center">
+                    Ver Inscripciones</UButton>
+
                 <UButton @click="emit('borrar-evento', props.evento)"
                     class="w-full bg-boton hover:bg-boton-hover text-texto font-semibold text-sm py-2 px-4 rounded-xl transition-colors cursor-pointer flex justify-center">
                     Eliminar evento

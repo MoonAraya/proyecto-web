@@ -5,6 +5,7 @@ definePageMeta({
 })
 
 import type { Evento } from '../types/evento'
+import type { Inscrito } from '../types/inscrito'
 import { z } from 'zod';
 
 const validarCrearEvento = z.object({
@@ -136,7 +137,7 @@ async function borrarEvento() {
         await $fetch(`/api/eventos/${eventoBorrar.value?.id}`, {
             method: 'DELETE'
         })
-        cerrarConfirmacionBorrar();
+        cerrarConfirmacionBorrarEvento();
         await refresh();
 
         useToast().add({
@@ -163,9 +164,106 @@ function confirmarBorrarEvento(evento: Evento) {
     mostrarConfirmacionBorrar.value = true;
 }
 // Para cerrar la confirmacion
-function cerrarConfirmacionBorrar() {
+function cerrarConfirmacionBorrarEvento() {
     mostrarConfirmacionBorrar.value = false;
     eventoBorrar.value = null;
+}
+
+
+
+//Cosas tabla inscripciones
+
+// el evento seleccionado para ver las inscripciones, es null hasta que se apreta el boton para ver inscripciones
+const eventoSeleccionado = ref<Evento | null>(null);
+
+// se vuelve true cuando se apreta el boton para mostrar
+const mostrarTablaInscripciones = ref(false);
+
+// lista con inscripciones del evento seleccionado
+const inscripcionesEvento = ref<Inscrito[]>([]);
+
+// error para el catch
+const errorInscripciones = ref('');
+
+
+async function abrirInscripciones(evento: Evento) {
+    eventoSeleccionado.value = evento;
+    mostrarTablaInscripciones.value = true;
+    errorInscripciones.value = '';
+
+    try {
+        const respuesta = await $fetch<Inscrito[]>(`/api/inscritos/eventos/${evento.id}`)
+        inscripcionesEvento.value = respuesta
+    }
+    catch (err: any) {
+        errorInscripciones.value = getApiErrorMessage(err, 'No se pudieron cargar las inscripciones')
+        inscripcionesEvento.value = []
+    }
+}
+
+function cerrarTablaInscripciones() {
+    mostrarTablaInscripciones.value = false
+    eventoSeleccionado.value = null
+    inscripcionesEvento.value = []
+    errorInscripciones.value = ''
+}
+
+// Borrar inscripcion
+
+
+const borrandoInscripcion = ref(false);
+
+// inscripcion a borrar, es null hasta que se apreta el boton de borrar, ahi se guarda
+const inscripcionBorrar = ref<Inscrito | null>(null);
+
+//para mostrar el popup de confirmacion de borrado de inscripcion
+const mostrarConfirmacionBorrarInscripcion = ref(false);
+
+//pasa al apretar el boton de borrar inscripcion
+function confirmarBorrarInscripcion(inscripcion: Inscrito) {
+    inscripcionBorrar.value = inscripcion;
+    mostrarConfirmacionBorrarInscripcion.value = true;
+}
+
+//Es lo que pasa al apretar cancelar en el popup de confirmacion de brorar la inscripcion
+function cerrarConfirmacionBorrarInscripcion() {
+    mostrarConfirmacionBorrarInscripcion.value = false;
+    inscripcionBorrar.value = null;
+}
+
+
+// funcion para borrar inscripcion como tal
+async function borrarInscripcion() {
+    borrandoInscripcion.value = true;
+    const nombreInscripcionBorrada = inscripcionBorrar.value?.nombre + " " + inscripcionBorrar.value?.apellido;
+    const eventoNombre = eventoSeleccionado.value?.titulo;
+    try {
+        await $fetch(`/api/inscritos/${inscripcionBorrar.value?.id}`, {
+            method: 'DELETE'
+        })
+
+        cerrarConfirmacionBorrarInscripcion();
+
+        // el await refresh para refrescar los eventos como tal, asi se ve la modificacion en la cantidad
+        await refresh();
+
+        // este otro para recargar la tabla de inscripciones del evento seleccionado
+        if (eventoSeleccionado.value) {
+            await abrirInscripciones(eventoSeleccionado.value)
+        }
+
+        useToast().add({
+            duration: 3000,
+            title: 'Eliminacion correcta',
+            description: `Se ha eliminado correctamente la inscripcion ${nombreInscripcionBorrada} del evento ${eventoNombre}`
+        })
+    }
+    catch (err: any) {
+        errorInscripciones.value = getApiErrorMessage(err, 'No se pudo eliminar la inscripción')
+    }
+    finally {
+        borrandoInscripcion.value = false;
+    }
 }
 
 
@@ -204,7 +302,8 @@ function cerrarConfirmacionBorrar() {
 
         <section class="mx-auto justify-around grid gap-6 md:grid-cols-3">
             <!-- loop de cards con divs no article -->
-            <EventoCardsAdmin v-for="evento in eventos" :evento="evento" @borrar-evento="confirmarBorrarEvento" />
+            <EventoCardsAdmin v-for="evento in eventos" :evento="evento" @borrar-evento="confirmarBorrarEvento"
+                @ver-inscripciones="abrirInscripciones" />
         </section>
     </div>
 
@@ -266,13 +365,58 @@ function cerrarConfirmacionBorrar() {
         </UForm>
     </Popups>
 
+    <!-- tabla para mostrar inscripciones de eventos en un popup -->
+    <Popups v-model:open="mostrarTablaInscripciones"
+        :title="eventoSeleccionado?.titulo ? `Inscripciones de ${eventoSeleccionado.titulo}` : 'Inscripciones'">
+        <div class="space-y-4">
+            <div v-if="inscripcionesEvento.length === 0" class="text-texto/70">
+                No hay inscripciones para este evento.
+            </div>
+
+            <div v-if="inscripcionesEvento.length > 0" class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-texto">
+                    <thead>
+                        <tr>
+                            <th class="py-2 pr-4">Email</th>
+                            <th class="py-2 pr-4">Nombre</th>
+                            <th class="py-2">Apellido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="inscripcion in inscripcionesEvento" :key="inscripcion.id"
+                            class="border-b border-fondo-login/50">
+                            <td class="py-2 pr-4">{{ inscripcion.email }}</td>
+                            <td class="py-2 pr-4">{{ inscripcion.nombre }}</td>
+                            <td class="py-2 pr-4">{{ inscripcion.apellido }}</td>
+                            <td class="py-2">
+                                <UButton
+                                    class="bg-boton text-texto py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors"
+                                    @click="confirmarBorrarInscripcion(inscripcion)">
+                                    Eliminar
+                                </UButton>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-end">
+                <UButton @click="cerrarTablaInscripciones"
+                    class="bg-boton text-texto py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors"
+                    type="button">
+                    Cerrar
+                </UButton>
+            </div>
+        </div>
+    </Popups>
+
     <!-- Confirmar borrar evento -->
     <Popups v-model:open="mostrarConfirmacionBorrar" title="Borrar evento"
         :description="eventoBorrar ? `¿Estas seguro que deseas borrar el evento ${eventoBorrar.titulo}? Esta decisión es permanente` : ''">
         <!-- div con los 2 botones para cancelar o confirmar -->
         <div class="flex justify-between items-center gap-6">
             <!-- cancelar -->
-            <UButton @click="cerrarConfirmacionBorrar"
+            <UButton @click="cerrarConfirmacionBorrarEvento"
                 class="w-full bg-boton text-texto text-center justify-center py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors"
                 type="button">Cancelar</UButton>
             <!-- confirmar -->
@@ -282,4 +426,16 @@ function cerrarConfirmacionBorrar() {
         </div>
     </Popups>
 
+    <!-- Confirmar borrar inscripción -->
+    <Popups v-model:open="mostrarConfirmacionBorrarInscripcion" title="Borrar inscripción"
+        :description="inscripcionBorrar ? `¿Estás seguro que deseas borrar la inscripción de ${inscripcionBorrar.email}?` : ''">
+        <div class="flex justify-between items-center gap-6">
+            <UButton @click="cerrarConfirmacionBorrarInscripcion"
+                class="w-full bg-boton text-texto text-center justify-center py-2 px-4 rounded-md hover:bg-boton-hover font-bold transition-colors"
+                type="button">Cancelar</UButton>
+            <UButton @click="borrarInscripcion"
+                class="w-full bg-boton-eliminar text-white text-center justify-center py-2 px-4 rounded-md hover:bg-boton-eliminar-hover font-bold transition-colors"
+                type="button" :loading="borrandoInscripcion">Confirmar</UButton>
+        </div>
+    </Popups>
 </template>
