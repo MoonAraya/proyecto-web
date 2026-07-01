@@ -100,7 +100,12 @@ async function borrarUsuario() {
         useToast().add({
             duration: 3000,
             title: 'Eliminado correctamente',
-            description: `Se elimino correctamente al admin ${nombreUsuarioBorrar}}`
+            description: `Se elimino correctamente al admin ${nombreUsuarioBorrar}`,
+            ui: {
+                root: 'bg-fondo-card border border-fondo-login',
+                title: 'text-texto font-bold',
+                description: 'text-texto-formulario'
+            }
         })
     }
     catch (err: any) {
@@ -158,7 +163,7 @@ const tableMeta = createTableMeta<Usuario>()
         <!-- tabla de usuarios/mantenedor con sus botones en una columna -->
         <section>
             <UTable :data="usuarios" :columns="columns" :meta="tableMeta"
-                class="rounded-2xl border border-brand-border bg-boton/45" :ui="{
+                class="rounded-2xl border border-fondo-login bg-fondo-card" :ui="{
                     th: 'text-texto font-bold',
                     td: 'text-texto'
                 }">
