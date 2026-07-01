@@ -100,7 +100,7 @@ async function borrarUsuario() {
         useToast().add({
             duration: 3000,
             title: 'Eliminado correctamente',
-            description: `Se elimino correctamente al admin ${nombreUsuarioBorrar}`,
+            description: `Se elimino correctamente al admin ${nombreUsuarioBorrar}.`,
             ui: {
                 root: 'bg-fondo-card border border-fondo-login',
                 title: 'text-texto font-bold',
