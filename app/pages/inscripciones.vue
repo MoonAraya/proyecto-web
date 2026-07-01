@@ -61,6 +61,16 @@ async function guardarInscripcion() {
         // limpiar formulario
         limpiarFormulario()
         await refresh()
+        useToast().add({
+            duration: 3000,
+            title: 'Inscripción lograda',
+            description: 'Se ha inscrito correctamente al evento.',
+            ui: {
+                root: 'bg-fondo-card border border-fondo-login',
+                title: 'text-texto font-bold',
+                description: 'text-texto-formulario'
+            }
+        })
     } catch (err: any) {
         errorFormulario.value = getApiErrorMessage(err, 'Error al inscribirse. No pudo inscribirse.')
     } finally {
