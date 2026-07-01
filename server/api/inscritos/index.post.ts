@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
         if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
             throw createError({
                 statusCode: 409,
-                statusMessage: 'No puedes inscribirte al mismo evento más de una vez.'
+                message: 'No puedes inscribirte al mismo evento más de una vez.'
             })
         }
         throw err
