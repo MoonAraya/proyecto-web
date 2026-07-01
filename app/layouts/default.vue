@@ -12,7 +12,7 @@ const navegacion = [
     { label: 'Consultar Inscripción', to: '/consultarinscripcion' },
     ...(user.value?.rol === 'Administrador' ? [
         { label: 'Cuentas', to: '/gestor-cuentas' },
-        { label: 'Gestor de Staff', to: '/gestor-eventos' }] : [{ label: 'Login Staff', to: '/login' }]),
+        { label: 'Gestor de Eventos', to: '/gestor-eventos' }] : [{ label: 'Login Staff', to: '/login' }]),
 ]
 
 // Para logout
